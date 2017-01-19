@@ -19,9 +19,13 @@
 var app = {
     // Application Constructor
     initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+        this.bindEvents();
+        this.setupVue();
     },
 
+    bindEvents: function() {
+        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+    },
     // deviceready Event Handler
     //
     // Bind any cordova events here. Common events are:
@@ -32,14 +36,31 @@ var app = {
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+        // var parentElement = document.getElementById(id);
+        // var listeningElement = parentElement.querySelector('.listening');
+        // var receivedElement = parentElement.querySelector('.received');
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+        // listeningElement.setAttribute('style', 'display:none;');
+        // receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+    },
+
+    setupVue: function() {
+        var vm = new Vue({
+            el: "#vue-instance",
+            data: {
+                randomWord: "",
+                words: ["foo", "bar", "baz"]
+            },
+            methods: {
+                getRandomWord: function() {
+                    console.log("hello");
+                    var randomIndex = Math.floor(Math.random() * this.words.length);
+                    this.randomWord = this.words[randomIndex];
+                }
+            }
+        });
     }
 };
 
